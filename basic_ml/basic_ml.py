@@ -1,7 +1,10 @@
-from dagster import job, op
-from sklearn import tree
 from sklearn.datasets import load_iris
 from sklearn.metrics import accuracy_score
+from sklearn.tree import DecisionTreeClassifier
+
+from dagster import get_dagster_logger, job, op
+
+logger = get_dagster_logger()
 
 
 @op
@@ -12,7 +15,7 @@ def load_train_test_set():
 
 @op
 def train_classifier(training_set):
-    clf = tree.DecisionTreeClassifier()
+    clf = DecisionTreeClassifier()
     clf = clf.fit(training_set.data, training_set.target)
     return clf
 
@@ -20,7 +23,7 @@ def train_classifier(training_set):
 @op
 def find_classifier_accuracy(training_set, classifier):
     predictions = classifier.predict(training_set.data)
-    return accuracy_score(predictions, training_set.target)
+    logger.info(f"Accuracy: {accuracy_score(predictions, training_set.target)}")
 
 
 @job
