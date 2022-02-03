@@ -1,19 +1,25 @@
 from sklearn import tree
 from sklearn.datasets import load_iris
 from sklearn.metrics import accuracy_score
-from sklearn.model_selection import train_test_split
-
-iris = load_iris()
-x, y = iris.data, iris.target
-x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=123)
 
 
-clf = tree.DecisionTreeClassifier()
-clf = clf.fit(x, y)
+def load_train_test_set():
+    iris = load_iris()
+    return iris
 
 
-clf.predict(x)
+def train_classifier(training_set):
+    clf = tree.DecisionTreeClassifier()
+    clf = clf.fit(training_set.data, training_set.target)
+    return clf
 
 
-predictions = clf.predict(x)
-accuracy_score(predictions, y)
+def find_classifier_accuracy(training_set, classifier):
+    predictions = classifier.predict(training_set.data)
+    return accuracy_score(predictions, training_set.target)
+
+
+if __name__ == "__main__":
+    training_set = load_train_test_set()
+    classifier = train_classifier(training_set)
+    find_classifier_accuracy(training_set, classifier)
