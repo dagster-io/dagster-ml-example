@@ -1,6 +1,6 @@
 from dagster import repository
 
-from .basic_ml import basic_ml_job
+from .basic_ml_with_config import basic_ml_job
 
 
 @repository
