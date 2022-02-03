@@ -2,3 +2,4 @@ dagster==0.13.16
 dagit==0.13.16
 dagster-cloud==0.13.16
 pytest
+scikit-learn==1.0.2
